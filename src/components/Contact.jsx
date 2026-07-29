@@ -162,19 +162,12 @@ Best regards,
                   : 'border-gray-200 bg-white/80 backdrop-blur-xl'
               }`}
             >
-              <div className="flex items-start justify-between gap-4 mb-4 pb-3 border-b border-white/10">
-                <div>
-                  <p className={`text-xs font-mono uppercase tracking-[0.25em] ${
-                    theme === 'dark' ? 'text-gray-500' : 'text-gray-500'
-                  }`}>
-                    direct lines
-                  </p>
-                  <h3 className={`mt-2 text-lg font-light ${
-                    theme === 'dark' ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    Minimal touchpoints, quick response.
-                  </h3>
-                </div>
+              <div className="flex items-center justify-between gap-4 mb-4 pb-3 border-b border-white/10">
+                <h3 className={`text-lg font-light ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  Get In Touch. 
+                </h3>
                 <div className={`hidden sm:flex items-center gap-2 rounded-full px-2.5 py-1 text-[11px] font-mono border ${
                   theme === 'dark'
                     ? 'border-[#00e676]/20 bg-[#00e676]/10 text-[#00e676]'

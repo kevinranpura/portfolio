@@ -31,9 +31,9 @@ function Skills() {
     return (
         <section
             id="skills"
-            className="py-20 px-6 sm:px-8 lg:px-12 relative overflow-hidden bg-transparent"
+            className="py-24 px-6 sm:px-8 lg:px-12 relative overflow-hidden bg-transparent"
         >
-            <div className="max-w-6xl mx-auto relative z-10">
+            <div className="max-w-7xl mx-auto relative z-10">
                 <SectionHeader theme={theme} label="~/skills" title="Skills" />
 
                 <div
@@ -72,14 +72,14 @@ function Skills() {
 
                             <div className="flex items-center justify-between mb-5">
                                 <h3
-                                    className={`text-base font-bold tracking-tight ${
+                                    className={`text-[20px] font-bold tracking-tight ${
                                         isDark ? 'text-white' : 'text-slate-800'
                                     }`}
                                 >
                                     {category.title}
                                 </h3>
                                 <span
-                                    className={`font-mono text-[11px] ${
+                                    className={`font-mono text-[15px] ${
                                         isDark ? 'text-[#00e676]/40' : 'text-[#334155]/40'
                                     }`}
                                 >
@@ -88,7 +88,7 @@ function Skills() {
                             </div>
 
                             <p
-                                className={`font-mono text-[13px] leading-[1.9] ${
+                                className={`font-mono text-[15px] leading-[1.9] ${
                                     isDark ? 'text-slate-400' : 'text-slate-500'
                                 }`}
                             >

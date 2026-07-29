@@ -1,33 +1,49 @@
 import { motion, AnimatePresence } from 'motion/react';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { ThemeContext } from '../App';
 import { X, ExternalLink, Github, Check } from 'lucide-react';
 
 function ProjectModal({ project, isOpen, onClose }) {
     const { theme } = useContext(ThemeContext);
+    const isDark = theme === 'dark';
+    const accent = isDark ? '#00e676' : '#334155';
 
-    // Prevent body scroll when modal is open
+    const scrollRef = useRef(null);
+    const sectionRefs = useRef([]);
+    const [activeSection, setActiveSection] = useState(0);
+
+    const sections = ['Overview', 'Key Features', 'Challenges & Solutions'];
+
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
         }
-        return () => {
-            document.body.style.overflow = 'unset';
-        };
+        return () => { document.body.style.overflow = 'unset'; };
     }, [isOpen]);
 
-    // Close on escape key
     useEffect(() => {
         const handleEscape = (e) => {
-            if (e.key === 'Escape' && isOpen) {
-                onClose();
-            }
+            if (e.key === 'Escape' && isOpen) onClose();
         };
         window.addEventListener('keydown', handleEscape);
         return () => window.removeEventListener('keydown', handleEscape);
     }, [isOpen, onClose]);
+
+    const handleScroll = () => {
+        const container = scrollRef.current;
+        if (!container) return;
+        const offsets = sectionRefs.current.map((el) =>
+            el ? Math.abs(el.getBoundingClientRect().top - container.getBoundingClientRect().top) : Infinity
+        );
+        const closest = offsets.indexOf(Math.min(...offsets));
+        if (closest !== -1) setActiveSection(closest);
+    };
+
+    const scrollToSection = (i) => {
+        sectionRefs.current[i]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
 
     if (!project) return null;
 
@@ -35,7 +51,6 @@ function ProjectModal({ project, isOpen, onClose }) {
         <AnimatePresence>
             {isOpen && (
                 <>
-                    {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -45,269 +60,234 @@ function ProjectModal({ project, isOpen, onClose }) {
                         className="fixed inset-0 bg-black/70 backdrop-blur-md z-50"
                     />
 
-                    {/* Modal Container - Full screen on mobile, centered card on desktop */}
-                    <div className="fixed inset-0 z-[60] overflow-hidden">
+                    <div className="fixed inset-0 z-[60] flex items-center justify-center p-0 md:p-8 pointer-events-none">
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 8 }}
                             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                            className={`relative w-screen h-screen rounded-none md:rounded-none backdrop-blur-sm border-0 md:border-2 overflow-y-auto ${
-                                // theme === 'dark'
-                                //     ? 'bg-[#1c1c1c] md:bg-[#5e6472]/95 md:border-[#b8f2e6]/30'
-                                //     : 'bg-[#fafafa] md:bg-white/95 md:border-[#aed9e0]/40'
-                                theme === 'dark'
-    ? 'bg-[#050806]/95 border-[#00e676]/30'  : 'bg-[#f8faf8] md:bg-white/95 md:border-[#86efac]/40'
-                            } shadow-2xl`}
                             onClick={(e) => e.stopPropagation()}
+                            className={`relative w-full h-full md:h-[86vh] md:max-w-4xl overflow-hidden md:rounded-xl border pointer-events-auto ${
+                                isDark ? 'bg-[#070a08] border-white/10' : 'bg-white border-slate-900/10'
+                            } shadow-2xl`}
                         >
-                            {/* Gradient overlay */}
-                            <div className={`absolute inset-0 pointer-events-none ${
-                                theme === 'dark'
-                                    ? 'bg-gradient-to-br from-[#00e676]/5 via-transparent to-transparent'
-                                    : 'bg-gradient-to-br from-[#86efac]/10 via-transparent to-transparent'
-                            }`} />
-
-                            {/* Close Button */}
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onClose();
-                                }}
-                                className={`fixed top-4 right-4 md:top-6 md:right-6 z-[100] p-3 rounded-xl transition-all duration-300 ${
-                                    theme === 'dark'
-                                        ? 'bg-[#00e676]/10 hover:bg-[#00e676]/20 text-[#00e676] border border-[#00e676]/30'
-                                        : 'bg-[#86efac]/20 hover:bg-[#86efac]/30 text-[#334155] border border-[#86efac]/40'
+                            {/* Top bar */}
+                            <div
+                                className={`flex items-center justify-between px-6 md:px-8 py-4 border-b ${
+                                    isDark ? 'border-white/10' : 'border-slate-900/10'
                                 }`}
-                                aria-label="Close modal"
                             >
-                                <X size={24} />
-                            </button>
-
-                            {/* Content */}
-                            <div className="relative z-10 h-full overflow-y-auto overscroll-contain custom-scrollbar px-6 py-20 md:px-12 md:py-24">
-                                {/* Header */}
-                                <motion.div
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.1 }}
-                                    className="mb-12"
+                                <span className={`font-mono text-[11px] tracking-widest ${isDark ? 'text-slate-500' : 'text-slate-400'}`}>
+                                    PROJECT
+                                </span>
+                                <button
+                                    onClick={onClose}
+                                    className={`p-1.5 rounded-md transition-colors duration-300 ${
+                                        isDark ? 'text-slate-400 hover:text-white hover:bg-white/5' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-900/5'
+                                    }`}
+                                    aria-label="Close modal"
                                 >
-                                    <h2 className={`text-4xl md:text-5xl font-bold mb-4 ${
-                                        theme === 'dark' ? 'text-[#00e676]' : 'text-[#334155]'
-                                    }`}>
-                                        {project.title}
-                                    </h2>
-                                    
-                                    {/* Tags */}
-                                    <div className="flex flex-wrap gap-2 mb-6">
-                                        {project.tags.map((tag, i) => (
-                                            <motion.span
-                                                key={i}
-                                                initial={{ opacity: 0, scale: 0.8 }}
-                                                animate={{ opacity: 1, scale: 1 }}
-                                                transition={{ delay: 0.15 + i * 0.05 }}
-                                                className={`px-3 py-1.5 rounded-full text-sm font-semibold ${
-                                                    theme === 'dark'
-                                                        ? 'bg-[#00e676]/20 text-[#00e676]'
-                                                        : 'bg-[#86efac]/40 text-[#334155]'
-                                                }`}
+                                    <X size={18} />
+                                </button>
+                            </div>
+
+                            <div className="flex flex-col md:flex-row h-[calc(100%-53px)]">
+                                {/* Section rail */}
+                                <div
+                                    className={`hidden md:flex flex-col justify-between w-52 flex-shrink-0 border-r px-6 py-8 ${
+                                        isDark ? 'border-white/10' : 'border-slate-900/10'
+                                    }`}
+                                >
+                                    <div className="space-y-1">
+                                        {sections.map((s, i) => (
+                                            <button
+                                                key={s}
+                                                onClick={() => scrollToSection(i)}
+                                                className="relative block w-full text-left py-2.5 group"
                                             >
-                                                {tag}
-                                            </motion.span>
+                                                <span
+                                                    className={`text-sm transition-colors duration-300 ${
+                                                        activeSection === i
+                                                            ? isDark ? 'text-white font-semibold' : 'text-slate-900 font-semibold'
+                                                            : isDark ? 'text-slate-500 group-hover:text-slate-300' : 'text-slate-400 group-hover:text-slate-600'
+                                                    }`}
+                                                >
+                                                    {s}
+                                                </span>
+                                                {activeSection === i && (
+                                                    <motion.span
+                                                        layoutId="modalSectionIndicator"
+                                                        className="absolute left-[-25px] top-0 bottom-0 w-px"
+                                                        style={{ backgroundColor: accent }}
+                                                    />
+                                                )}
+                                            </button>
                                         ))}
                                     </div>
 
-                                    {/* Links */}
-                                    <div className="flex gap-4">
+                                    <div className="flex gap-2">
                                         {project.live && (
-                                            <motion.a
+                                            <a
                                                 href={project.live}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                whileHover={{ scale: 1.05, y: -2 }}
-                                                whileTap={{ scale: 0.95 }}
-                                                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                                                    theme === 'dark'
-                                                        ? 'bg-[#00e676]/10 text-[#00e676] border-2 border-[#00e676]/30 hover:bg-[#00e676]/20'
-                                                        : 'bg-[#86efac]/20 text-[#334155] border-2 border-[#86efac]/40 hover:bg-[#86efac]/30'
+                                                className={`p-2 rounded-md transition-colors duration-300 ${
+                                                    isDark ? 'text-slate-400 hover:text-white hover:bg-white/5' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-900/5'
                                                 }`}
+                                                aria-label="View live"
                                             >
-                                                <ExternalLink size={18} />
-                                                View Live
-                                            </motion.a>
+                                                <ExternalLink size={15} />
+                                            </a>
                                         )}
                                         {project.github && (
-                                            <motion.a
+                                            <a
                                                 href={project.github}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                whileHover={{ scale: 1.05, y: -2 }}
-                                                whileTap={{ scale: 0.95 }}
-                                                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                                                    theme === 'dark'
-                                                        ? 'bg-[#00e676]/10 text-[#00e676] border-2 border-[#00e676]/30 hover:bg-[#00e676]/20'
-                                                        : 'bg-[#86efac]/20 text-[#334155] border-2 border-[#86efac]/40 hover:bg-[#86efac]/30'
+                                                className={`p-2 rounded-md transition-colors duration-300 ${
+                                                    isDark ? 'text-slate-400 hover:text-white hover:bg-white/5' : 'text-slate-400 hover:text-slate-900 hover:bg-slate-900/5'
                                                 }`}
+                                                aria-label="GitHub"
                                             >
-                                                <Github size={18} />
-                                                GitHub
-                                            </motion.a>
+                                                <Github size={15} />
+                                            </a>
                                         )}
                                     </div>
-                                </motion.div>
+                                </div>
 
-                                {/* Divider */}
-                                <motion.div
-                                    initial={{ scaleX: 0 }}
-                                    animate={{ scaleX: 1 }}
-                                    transition={{ delay: 0.3, duration: 0.6 }}
-                                    className={`h-px mb-8 ${
-                                        theme === 'dark'
-                                            ? 'bg-gradient-to-r from-[#00e676]/30 via-[#00e676]/10 to-transparent'
-                                            : 'bg-gradient-to-r from-[#86efac]/40 via-[#86efac]/10 to-transparent'
-                                    }`}
-                                />
-
-                                {/* Overview */}
-                                <motion.section
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.35 }}
-                                    className="mb-12"
+                                {/* Content */}
+                                <div
+                                    ref={scrollRef}
+                                    onScroll={handleScroll}
+                                    className="flex-1 overflow-y-auto custom-scrollbar px-6 md:px-12 py-8 md:py-10"
                                 >
-                                    <h3 className={`text-2xl font-bold mb-4 ${
-                                        theme === 'dark' ? 'text-[#00e676]' : 'text-[#334155]'
-                                    }`}>
-                                        Overview
-                                    </h3>
-                                    <p className={`leading-8 text-base md:text-lg ${
-                                        theme === 'dark' ? 'text-[#86efac]' : 'text-[#334155]'
-                                    } opacity-90`}>
-                                        {project.fullDescription}
-                                    </p>
-                                </motion.section>
+                                    <div className="mb-10">
+                                        <h2
+                                            className={`text-3xl md:text-4xl font-bold mb-4 tracking-tight ${
+                                                isDark ? 'text-white' : 'text-slate-900'
+                                            }`}
+                                        >
+                                            {project.title}
+                                        </h2>
 
-                                {/* Key Features */}
-                                <motion.section
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.4 }}
-                                    className="mb-12"
-                                >
-                                    <h3 className={`text-2xl font-bold mb-4 ${
-                                        theme === 'dark' ? 'text-[#00e676]' : 'text-[#334155]'
-                                    }`}>
-                                        Key Features
-                                    </h3>
-                                    <ul className="space-y-3">
-                                        {project.features.map((feature, i) => (
-                                            <motion.li
-                                                key={i}
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 0.45 + i * 0.05 }}
-                                                className="flex items-start gap-3"
-                                            >
-                                                <Check
-                                                    size={20}
-                                                    className={`flex-shrink-0 mt-1 ${
-                                                        theme === 'dark' ? 'text-[#00e676]' : 'text-[#86efac]'
+                                        <div className={`flex flex-wrap gap-x-4 gap-y-1.5 mb-6 font-mono text-xs ${
+                                            isDark ? 'text-slate-500' : 'text-slate-500'
+                                        }`}>
+                                            {project.tags.map((tag, i) => (
+                                                <span key={i}>{tag}</span>
+                                            ))}
+                                        </div>
+
+                                        <div className="flex md:hidden gap-3">
+                                            {project.live && (
+                                                <a
+                                                    href={project.live}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={`flex items-center gap-2 px-4 py-2 text-sm border rounded-md ${
+                                                        isDark ? 'border-white/15 text-slate-200' : 'border-slate-900/15 text-slate-700'
                                                     }`}
-                                                />
-                                                <span className={`leading-relaxed ${
-                                                    theme === 'dark' ? 'text-[#86efac]' : 'text-[#334155]'
-                                                } opacity-90`}>
-                                                    {feature}
+                                                >
+                                                    <ExternalLink size={14} /> Live
+                                                </a>
+                                            )}
+                                            {project.github && (
+                                                <a
+                                                    href={project.github}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className={`flex items-center gap-2 px-4 py-2 text-sm border rounded-md ${
+                                                        isDark ? 'border-white/15 text-slate-200' : 'border-slate-900/15 text-slate-700'
+                                                    }`}
+                                                >
+                                                    <Github size={14} /> Code
+                                                </a>
+                                            )}
+                                        </div>
+                                    </div>
+
+                                    {/* Overview */}
+                                    <section ref={(el) => (sectionRefs.current[0] = el)} className="mb-14 scroll-mt-4">
+                                        <SectionLabel title="Overview" isDark={isDark} />
+                                        <p className={`leading-8 text-[15px] md:text-base ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                                            {project.fullDescription}
+                                        </p>
+                                    </section>
+
+                                    {/* Features */}
+                                    <section ref={(el) => (sectionRefs.current[1] = el)} className="mb-14 scroll-mt-4">
+                                        <SectionLabel title="Key Features" isDark={isDark} />
+                                        <div className="grid sm:grid-cols-2 gap-x-6 gap-y-3.5">
+                                            {project.features.map((feature, i) => (
+                                                <div key={i} className="flex items-start gap-2.5">
+                                                    <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: accent }} />
+                                                    <span className={`text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                                                        {feature}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </section>
+
+                                    {/* Challenges & Solutions */}
+                                    <section ref={(el) => (sectionRefs.current[2] = el)} className="mb-6 scroll-mt-4">
+                                        <SectionLabel title="Challenges & Solutions" isDark={isDark} />
+                                        <div className="grid md:grid-cols-2 gap-8">
+                                            <div>
+                                                <span className={`text-xs font-semibold tracking-wide ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>
+                                                    CHALLENGES
                                                 </span>
-                                            </motion.li>
-                                        ))}
-                                    </ul>
-                                </motion.section>
-
-                                {/* Challenges & Solutions */}
-                                <motion.section
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.5 }}
-                                    className="mb-12"
-                                >
-                                    <h3 className={`text-2xl font-bold mb-4 ${
-                                        theme === 'dark' ? 'text-[#00e676]' : 'text-[#334155]'
-                                    }`}>
-                                        Challenges & Solutions
-                                    </h3>
-                                    
-                                    {/* Challenges */}
-                                    <h4 className={`text-lg font-semibold mb-3 ${
-                                        theme === 'dark' ? 'text-[#86efac]' : 'text-[#334155]'
-                                    }`}>
-                                        Challenges
-                                    </h4>
-                                    <ul className="space-y-2 mb-6">
-                                        {project.challenges.map((challenge, i) => (
-                                            <motion.li
-                                                key={i}
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 0.55 + i * 0.05 }}
-                                                className={`flex items-start gap-3 pl-4 ${
-                                                    theme === 'dark' ? 'text-[#86efac]' : 'text-[#334155]'
-                                                } opacity-80`}
-                                            >
-                                                <span>•</span>
-                                                <span>{challenge}</span>
-                                            </motion.li>
-                                        ))}
-                                    </ul>
-
-                                    {/* Solutions */}
-                                    <h4 className={`text-lg font-semibold mb-3 ${
-                                        theme === 'dark' ? 'text-[#86efac]' : 'text-[#334155]'
-                                    }`}>
-                                        Solutions
-                                    </h4>
-                                    <ul className="space-y-2">
-                                        {project.solutions.map((solution, i) => (
-                                            <motion.li
-                                                key={i}
-                                                initial={{ opacity: 0, x: -20 }}
-                                                animate={{ opacity: 1, x: 0 }}
-                                                transition={{ delay: 0.6 + i * 0.05 }}
-                                                className={`flex items-start gap-3 pl-4 ${
-                                                    theme === 'dark' ? 'text-[#86efac]' : 'text-[#334155]'
-                                                } opacity-80`}
-                                            >
-                                                <span>•</span>
-                                                <span>{solution}</span>
-                                            </motion.li>
-                                        ))}
-                                    </ul>
-                                </motion.section>
+                                                <ul className="mt-3 space-y-7">
+                                                    {project.challenges.map((c, i) => (
+                                                        <li key={i} className={`text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
+                                                            <span style={{ color: accent }}>~/ </span>
+                                                            <span>{c}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <div>
+                                                <span className={`text-xs font-semibold tracking-wide ${isDark ? 'text-slate-500' : 'text-slate-600'}`}>
+                                                    SOLUTIONS
+                                                </span>
+                                                <ul className="mt-3 space-y-6">
+                                                    {project.solutions.map((s, i) => (
+                                                        <li key={i} className={`text-sm leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-900'}`}>
+                                                            <span style={{ color: accent }}>~/ </span>
+                                                            <span>{s}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
                             </div>
                         </motion.div>
                     </div>
 
-                    {/* Custom Scrollbar Styles */}
-                    <style jsx>{`
-                        .custom-scrollbar::-webkit-scrollbar {
-                            width: 8px;
-                        }
-                        .custom-scrollbar::-webkit-scrollbar-track {
-                            background: ${theme === 'dark' ? 'rgba(94, 100, 114, 0.2)' : 'rgba(174, 217, 224, 0.2)'};
-                            border-radius: 10px;
-                        }
+                    <style>{`
+                        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+                        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
                         .custom-scrollbar::-webkit-scrollbar-thumb {
-                            background: ${theme === 'dark' ? 'rgba(184, 242, 230, 0.3)' : 'rgba(94, 100, 114, 0.3)'};
+                            background: ${isDark ? 'rgba(255,255,255,0.12)' : 'rgba(15,23,42,0.12)'};
                             border-radius: 10px;
                         }
                         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-                            background: ${theme === 'dark' ? 'rgba(184, 242, 230, 0.5)' : 'rgba(94, 100, 114, 0.5)'};
+                            background: ${isDark ? 'rgba(255,255,255,0.2)' : 'rgba(15,23,42,0.2)'};
                         }
                     `}</style>
                 </>
             )}
         </AnimatePresence>
+    );
+}
+
+function SectionLabel({ title, isDark }) {
+    return (
+        <h3 className={`text-lg font-bold mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
+            {title}
+        </h3>
     );
 }
 

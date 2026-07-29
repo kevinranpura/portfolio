@@ -134,7 +134,7 @@ function Hero() {
           animate={{ scaleX: 1 }}
           transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className={`h-1 w-48 mx-auto rounded-full mb-12 ${
-            theme === "dark" ? "bg-[#00e676]/50" : "bg-[#86efac]/60"
+            theme === "dark" ? "bg-[#00e676]/50" : "bg-[#334155]"
           }`}
         />
 
@@ -156,7 +156,7 @@ function Hero() {
               transition-all duration-300 overflow-hidden
               ${theme === "dark" 
                 ? "bg-[#00e676] text-[#03120a]" 
-                : "bg-[#86efac] text-[#334155]"
+                : "bg-[#334155] text-[#f8faf8]"
               }
               shadow-lg hover:shadow-2xl
               ${theme === "dark"
@@ -201,8 +201,8 @@ function Hero() {
               group px-8 py-4 rounded-2xl font-semibold text-base md:text-lg
               transition-all duration-300 border-2
               ${theme === "dark"
-                ? "border-[#00e676]/40 text-[#00e676] hover:bg-[#00e676]/10 hover:border-[#00e676]"
-                : "border-[#334155]/30 text-[#334155] hover:bg-[#334155]/5 hover:border-[#334155]"
+                ? "bg-[#050806]/100 border-[#00e676]/40 text-[#00e676] hover:bg-[#00e676]/10 hover:border-[#00e676]"
+                : "bg-[#f8faf8]/100 border-[#334155]/30 text-[#334155] hover:bg-[#334155]/5 hover:border-[#334155]"
               }
             `}
             aria-label="Get In Touch"

@@ -15,20 +15,7 @@ function AboutMe() {
             <div className="absolute inset-0 overflow-hidden pointer-events-none" />
 
             <div className="max-w-7xl mx-auto relative z-10">
-                <div className="flex flex-col lg:flex-row items-center gap-10">
-                    {/* Interactive MiniTerminal */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -60 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="w-full lg:w-5/12 flex justify-center"
-                    >
-                        <div className="relative w-[520px] h-[430px] rounded-3xl overflow-hidden border border-[#00e676]/20 bg-[#2f2f2f] ">
-                            <MiniTerminal />
-                        </div>
-                    </motion.div>
-
+                <div className="flex flex-col lg:flex-row items-start gap-10">
                     {/* Content Section */}
                     <motion.div
                         initial={{ opacity: 0, x: 60 }}
@@ -63,6 +50,19 @@ function AboutMe() {
 
                         </motion.div>
                     </motion.div>
+                    {/* Interactive MiniTerminal */}
+                    <motion.div
+                        initial={{ opacity: 0, x: -60 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8 }}
+                        className="w-full lg:w-5/12 flex justify-center"
+                    >
+                        <div className="relative w-[520px] h-[430px] rounded-3xl overflow-hidden border border-[#00e676]/20 bg-[#2f2f2f] ">
+                            <MiniTerminal />
+                        </div>
+                    </motion.div>
+
                 </div>
             </div>
         </section>
