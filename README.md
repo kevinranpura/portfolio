@@ -4,7 +4,7 @@ A modern, fully responsive portfolio website built with **React**, **Vite**, and
 
 Designed with smooth animations, interactive visuals, and a clean developer-focused interface.
 
-🔗 **Live Demo:** *Add your portfolio URL here*
+🔗 **Live Demo:** [Demo](https://kevin-ranpura.vercel.app/)
 
 ---
 
