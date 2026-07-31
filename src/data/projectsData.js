@@ -177,9 +177,9 @@ export const projectsData = [
             'Integrated MCP-based tools for market data retrieval and news analysis within a modular architecture'
         ],
 
-        github: 'https://github.com/kevinranpura',
+        github: 'https://github.com/kevinranpura/agentic-stock-research',
 
-        live: 'https://github.com/kevinranpura',
+        live: 'https://stocksage-ai.streamlit.app/',
 
         featured: true
     },
