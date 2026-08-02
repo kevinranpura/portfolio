@@ -179,7 +179,7 @@ export const projectsData = [
 
         github: 'https://github.com/kevinranpura/agentic-stock-research',
 
-        live: 'https://stocksage-ai.streamlit.app/',
+        live: 'https://stocksage-ai-app.vercel.app/',
 
         featured: true
     },
