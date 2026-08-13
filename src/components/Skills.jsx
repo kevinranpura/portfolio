@@ -13,7 +13,7 @@ function Skills() {
         { title: 'Backend', icon: Server, skills: ['Node.js', 'Express.js', 'REST APIs', 'FastAPI', 'Firebase', 'JWT'] },
         { title: 'Languages', icon: Cpu, skills: ['Python', 'Java', 'JavaScript', 'SQL', 'C', 'TypeScript'] },
         { title: 'Databases', icon: Database, skills: ['MongoDB', 'MySQL', 'PostgreSQL', 'ChromaDB'] },
-        { title: 'Tools', icon: Wrench, skills: ['Git', 'GitHub', 'Postman', 'Vercel', 'Supabase'] },
+        { title: 'Tools', icon: Wrench, skills: ['Git', 'GitHub', 'Postman', 'Vercel', 'Redis', 'Docker'] },
         { title: 'Libraries', icon: BarChart3, skills: ['Chart.js', 'D3.js', 'Matplotlib', 'LangChain', 'LangGraph'] },
     ];
 

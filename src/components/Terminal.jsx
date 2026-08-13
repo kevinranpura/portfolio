@@ -56,7 +56,6 @@ const COMMANDS = ["help", "whoami", "about", "skills", "projects", "contact", "c
 const BOOT_LINES = [
     { text: "booting kevin@portfolio v1.0.0...", v: "muted" },
     { text: "connection established.", v: "muted" },
-    { text: "Kevin Ranpura — Full-stack / AI Engineer", v: "heading" },
     { text: "Type 'help' to see available commands.", v: "default" },
 ];
 

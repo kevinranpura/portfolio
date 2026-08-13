@@ -57,7 +57,7 @@ function App() {
         color: theme === 'dark' ? '#050806' : '#f8faf8',
       },
 
-      fpsLimit: 60,
+      fpsLimit: 100,
 
       particles: {
         number: {
@@ -73,7 +73,7 @@ function App() {
         },
 
         shape: {
-          type: 'square',
+          type: 'circle',
         },
 
         opacity: {
@@ -110,7 +110,7 @@ function App() {
 
         links: {
           enable: true,
-          distance: 180,
+          distance: 200,
           color: theme === 'dark' ? '#00e676' : '#16a34a',
           opacity: 0.2,
           width: 1,
