@@ -45,52 +45,6 @@ export const projectsData = [
         featured: true
     },
     {
-        id: 'document-ai-assistant',
-        title: 'Document AI Assistant',
-
-        shortDescription: 'RAG-powered AI assistant that allows users to upload PDF documents, perform semantic search, and receive context-aware answers with source citations.',
-
-        fullDescription: 'Document AI Assistant is a Retrieval-Augmented Generation (RAG) application that enables users to upload PDF documents and interact with them using natural language. The application extracts document content, generates vector embeddings, stores them in a vector database, retrieves the most relevant context using semantic search, and leverages an LLM to generate accurate, context-aware responses with source references. Built with a React frontend and FastAPI backend, the project demonstrates an end-to-end RAG pipeline for document question answering.',
-
-        tags: [
-            'React',
-            'FastAPI',
-            'Python',
-            'LangChain',
-            'ChromaDB',
-            'Groq API',
-            'Tailwind CSS'
-        ],
-
-        features: [
-            'PDF upload and automated text extraction',
-            'Document chunking and vector embedding generation',
-            'Semantic search using a vector database',
-            'Context-aware question answering with LLMs',
-            'Source citation for retrieved document chunks',
-            'Interactive chat interface for document conversations',
-            'Responsive and intuitive user interface'
-        ],
-
-        challenges: [
-            'Designing an effective chunking strategy to preserve context while improving retrieval accuracy',
-            'Reducing hallucinations by grounding LLM responses in retrieved document content',
-            'Optimizing semantic search for relevant context retrieval',
-            'Building a clean full-stack architecture that separates document processing, retrieval, and response generation'
-        ],
-
-        solutions: [
-            'Implemented a complete Retrieval-Augmented Generation (RAG) pipeline using LangChain',
-            'Generated embeddings for document chunks and indexed them in ChromaDB for efficient similarity search',
-            'Retrieved the most relevant document context before every LLM invocation to improve response accuracy',
-            'Developed a modular FastAPI backend with a React frontend for document upload and conversational querying'
-        ],
-
-        github: 'https://github.com/kevinranpura',
-        live: 'https://github.com/kevinranpura',
-        featured: true
-    },
-    {
         id: 'musify',
 
         title: 'Musify Music Player',
@@ -181,6 +135,52 @@ export const projectsData = [
 
         live: 'https://stocksage-ai-app.vercel.app/',
 
+        featured: true
+    },
+    {
+        id: 'document-ai-assistant',
+        title: 'Document AI Assistant',
+
+        shortDescription: 'RAG-powered AI assistant that allows users to upload PDF documents, perform semantic search, and receive context-aware answers with source citations.',
+
+        fullDescription: 'Document AI Assistant is a Retrieval-Augmented Generation (RAG) application that enables users to upload PDF documents and interact with them using natural language. The application extracts document content, generates vector embeddings, stores them in a vector database, retrieves the most relevant context using semantic search, and leverages an LLM to generate accurate, context-aware responses with source references. Built with a React frontend and FastAPI backend, the project demonstrates an end-to-end RAG pipeline for document question answering.',
+
+        tags: [
+            'React',
+            'FastAPI',
+            'Python',
+            'LangChain',
+            'ChromaDB',
+            'Groq API',
+            'Tailwind CSS'
+        ],
+
+        features: [
+            'PDF upload and automated text extraction',
+            'Document chunking and vector embedding generation',
+            'Semantic search using a vector database',
+            'Context-aware question answering with LLMs',
+            'Source citation for retrieved document chunks',
+            'Interactive chat interface for document conversations',
+            'Responsive and intuitive user interface'
+        ],
+
+        challenges: [
+            'Designing an effective chunking strategy to preserve context while improving retrieval accuracy',
+            'Reducing hallucinations by grounding LLM responses in retrieved document content',
+            'Optimizing semantic search for relevant context retrieval',
+            'Building a clean full-stack architecture that separates document processing, retrieval, and response generation'
+        ],
+
+        solutions: [
+            'Implemented a complete Retrieval-Augmented Generation (RAG) pipeline using LangChain',
+            'Generated embeddings for document chunks and indexed them in ChromaDB for efficient similarity search',
+            'Retrieved the most relevant document context before every LLM invocation to improve response accuracy',
+            'Developed a modular FastAPI backend with a React frontend for document upload and conversational querying'
+        ],
+
+        github: 'https://github.com/kevinranpura',
+        live: 'https://github.com/kevinranpura',
         featured: true
     },
     {
