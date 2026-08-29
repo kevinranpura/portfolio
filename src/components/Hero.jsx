@@ -15,7 +15,7 @@ function Hero() {
     // });
     
     window.open(
-      "https://drive.google.com/file/d/13Tij8xoh5DcKsKPY_Dfs_tXKuRD1-JKP/view?usp=sharing",
+      "https://drive.google.com/file/d/1OKJT7MsdHgzgIIBpUNqA2bdAQA_VQcBd/view?usp=sharing",
       "_blank",
       "noopener,noreferrer"
     );
