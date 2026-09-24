@@ -1,228 +1,153 @@
-import { motion } from 'motion/react';
+import { motion as Motion } from 'motion/react';
 import { ThemeContext } from '../App';
-import { useContext, useMemo } from 'react';
-import { FileText, Mail } from 'lucide-react';
+import { useContext } from 'react';
+import { FileText, Mail, ArrowUpRight } from 'lucide-react';
 
 function Hero() {
   const { theme } = useContext(ThemeContext);
+  const isDark = theme === 'dark';
 
   const handleResume = () => {
-    // Resume analytics will be re-enabled after GA is configured.
-    // ReactGA.event({
-    //   category: "Resume",
-    //   action: "View",
-    //   label: "Resume PDF",
-    // });
-    
     window.open(
-      "https://drive.google.com/file/d/1OKJT7MsdHgzgIIBpUNqA2bdAQA_VQcBd/view?usp=sharing",
-      "_blank",
-      "noopener,noreferrer"
+      'https://drive.google.com/file/d/1OKJT7MsdHgzgIIBpUNqA2bdAQA_VQcBd/view?usp=sharing',
+      '_blank',
+      'noopener,noreferrer'
     );
   };
 
   const handleContactScroll = (e) => {
     e.preventDefault();
-    document.getElementById('contact')?.scrollIntoView({ 
+    document.getElementById('contact')?.scrollIntoView({
       behavior: 'smooth',
       block: 'start'
     });
   };
 
-  // Memoize name letters to prevent re-computation
-  const nameLetters = useMemo(() => "Kevin Ranpura".split(""), []);
-
   return (
     <section
       id="home"
-      className="min-h-[100dvh] flex items-center justify-center px-6 sm:px-8 lg:px-12 py-20 relative overflow-hidden bg-transparent"
+      className="min-h-[100dvh] flex items-center justify-center px-6 sm:px-8 lg:px-12 relative overflow-hidden bg-transparent select-none"
     >
-      <div className="absolute inset-0 overflow-hidden pointer-events-none" />
-
-      {/* Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="text-center relative z-10 max-w-7xl mx-auto"
-      >
-        {/* Greeting */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
+      <div className="relative z-10 max-w-4xl mx-auto text-center flex flex-col items-center justify-center py-12">
+        
+        {/* Greeting: Refined, elegant tracking */}
+        <Motion.div
+          initial={{ opacity: 0, y: -16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className={`text-base md:text-lg mb-6 font-medium tracking-wide ${
-            theme === "dark" ? "text-[#86efac]/70" : "text-[#334155]/60"
-          }`}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-5 sm:mb-6"
         >
-          Hello! I'm
-        </motion.div>
-
-        {/* Name - Optimized with reduced animations */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative inline-block group/name mb-8 cursor-default"
-        >
-          <span className={`text-4xl md:text-6xl lg:text-[70px] font-bold tracking-tight ${
-            theme === "dark" ? "text-[#00e676]" : "text-[#334155]"
+          <span className={`font-mono text-sm sm:text-base tracking-[0.25em] uppercase font-medium ${
+            isDark ? 'text-[#86efac]/80' : 'text-slate-500'
           }`}>
-            {nameLetters.map((char, i) => (
-              <motion.span
-                key={`${char}-${i}`}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{
-                  delay: 0.4 + i * 0.02,
-                  duration: 0.3
-                }}
-                className="inline-block"
-              >
-                {char === " " ? "\u00A0" : char}
-              </motion.span>
-            ))}
-            <motion.span
-              aria-hidden="true"
-              className={`ml-1 inline-block align-baseline h-[0.9em] w-[0.16em] rounded-sm ${
-                theme === 'dark' ? 'bg-[#00e676]' : 'bg-[#334155]'
-              }`}
-              animate={{
-                opacity: [0, 1, 1, 1, 0],
-                backgroundColor: [
-                  'rgba(0,0,0,0)',
-                  '#86efac',
-                  '#00e676',
-                  '#86efac',
-                  'rgba(0,0,0,0)'
-                ],
-              }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
-            />
+            Hello! I'm
           </span>
-          
-          {/* Center-spreading underline */}
-          <motion.div
-            className={`absolute -bottom-2 left-1/2 h-1 rounded-full ${
-              theme === "dark" ? "bg-[#00e676]" : "bg-[#86efac]"
-            }`}
-            initial={{ width: 0, x: 0 }}
-            whileHover={{ 
-              width: "100%",
-              x: "-50%",
-              transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
-            }}
-            style={{ transformOrigin: "center" }}
+        </Motion.div>
+
+        {/* Name: Elegant Didone Serif with hollow stroked outline from reference image */}
+        <Motion.h1
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="text-5xl sm:text-7xl md:text-8xl lg:text-[96px] font-bold tracking-tight mb-6 sm:mb-8 leading-none cursor-default group"
+          style={{ fontFamily: "'Bodoni Moda', 'Playfair Display', serif" }}
+        >
+          <span className={`inline-block transition-colors duration-300 ${
+            isDark ? 'text-[#00e676]' : 'text-emerald-600'
+          }`}>
+            Kevin Ranpura
+          </span>
+          <Motion.span
+            aria-hidden="true"
+            className="inline-block ml-2 sm:ml-3 h-[0.75em] w-[4px] sm:w-[5px] bg-[#00e676] align-baseline rounded-none"
+            animate={{ opacity: [1, 0, 1] }}
+            transition={{ duration: 0.9, repeat: Infinity, ease: 'linear' }}
           />
-        </motion.h1>
+        </Motion.h1>
 
-        {/* Tagline */}
-        <motion.p
+        {/* Role: Crisp, balanced subheadline */}
+        <Motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className={`text-xl md:text-2xl lg:text-3xl mb-10 font-light leading-relaxed ${
-            theme === "dark" ? "text-[#86efac]/90" : "text-[#334155]/80"
+          transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+          className={`font-mono text-lg sm:text-2xl md:text-3xl font-light tracking-wide mb-8 max-w-2xl ${
+            isDark ? 'text-slate-300' : 'text-slate-700'
           }`}
         >
-          Full-Stack Developer & AI Engineer
-        </motion.p>
+          Full-Stack Developer{' '}
+          <span className={`font-normal ${
+            isDark ? 'text-[#00e676]' : 'text-emerald-600'
+          }`}>
+            &amp;
+          </span>{' '}
+          AI Engineer
+        </Motion.p>
 
-        {/* Decorative line */}
-        <motion.div
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.8, delay: 0.9, ease: [0.22, 1, 0.36, 1] }}
-          className={`h-1 w-48 mx-auto rounded-full mb-12 ${
-            theme === "dark" ? "bg-[#00e676]/50" : "bg-[#334155]"
+        {/* Refined Minimalist Line with Traveling Light Pulse */}
+        <Motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 1 }}
+          transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className={`relative h-[1.5px] w-40 sm:w-56 mb-10 overflow-hidden ${
+            isDark ? 'bg-white/10' : 'bg-slate-300'
           }`}
-        />
+        >
+          <Motion.div
+            className="absolute inset-y-0 w-16 bg-gradient-to-r from-transparent via-[#00e676] to-transparent"
+            animate={{ x: ['-100%', '300%'] }}
+            transition={{ duration: 2.4, repeat: Infinity, ease: 'easeInOut' }}
+          />
+        </Motion.div>
 
-        {/* CTA Buttons - Optimized layout */}
-        <motion.div
+        {/* Action Buttons: Sleek, high-contrast, perfectly proportioned */}
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.1, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col sm:flex-row gap-5 justify-center items-center"
+          transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 w-full max-w-md sm:max-w-none"
         >
-          {/* Primary CTA */}
-          <motion.button
+          {/* Primary CTA: Resume */}
+          <Motion.button
             onClick={handleResume}
-            whileHover={{ y: -4 }}
+            whileHover={{ y: -3, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className={`
-              group relative px-8 py-4 rounded-2xl font-semibold text-base md:text-lg
-              transition-all duration-300 overflow-hidden
-              ${theme === "dark" 
-                ? "bg-[#00e676] text-[#03120a]" 
-                : "bg-[#334155] text-[#f8faf8]"
-              }
-              shadow-lg hover:shadow-2xl
-              ${theme === "dark"
-                ? "hover:shadow-[#00e676]/30"
-                : "hover:shadow-[#86efac]/40"
-              }
-            `}
+            className={`group relative px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl font-mono font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all duration-300 whitespace-nowrap overflow-hidden ${
+              isDark
+                ? 'bg-[#00e676] text-[#050806] hover:bg-[#15f786] shadow-md hover:shadow-lg'
+                : 'bg-slate-900 text-white hover:bg-slate-800 shadow-md'
+            }`}
             aria-label="View Resume"
           >
-            {/* Shine effect */}
-            <motion.div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100"
-              style={{
-                background: theme === "dark"
-                  ? 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%)'
-                  : 'linear-gradient(135deg, transparent 0%, rgba(255,255,255,0.5) 50%, transparent 100%)'
-              }}
-              animate={{
-                x: ['-100%', '100%'],
-              }}
-              transition={{
-                duration: 0.6,
-                repeat: Infinity,
-                repeatDelay: 2
-              }}
-            />
-            
-            <span className="relative z-10 flex items-center gap-2.5">
-              <FileText size={20} className="flex-shrink-0" />
-              View Resume
-            </span>
-          </motion.button>
+            {/* Subtle light sweep on hover */}
+            <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/30 to-transparent pointer-events-none" />
 
-          {/* Secondary CTA */}
-          <motion.a
+            <FileText size={18} className="shrink-0" />
+            <span>View Resume</span>
+            <ArrowUpRight
+              size={17}
+              className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </Motion.button>
+
+          {/* Secondary CTA: Contact */}
+          <Motion.a
             href="#contact"
             onClick={handleContactScroll}
-            whileHover={{ y: -4 }}
+            whileHover={{ y: -3, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.2 }}
-            className={`
-              group px-8 py-4 rounded-2xl font-semibold text-base md:text-lg
-              transition-all duration-300 border-2
-              ${theme === "dark"
-                ? "bg-[#050806]/100 border-[#00e676]/40 text-[#00e676] hover:bg-[#00e676]/10 hover:border-[#00e676]"
-                : "bg-[#f8faf8]/100 border-[#334155]/30 text-[#334155] hover:bg-[#334155]/5 hover:border-[#334155]"
-              }
-            `}
+            className={`group px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl font-mono font-semibold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all duration-300 whitespace-nowrap border ${
+              isDark
+                ? 'bg-[#050806]/60 border-white/20 text-white hover:border-[#00e676] hover:text-[#00e676] hover:bg-[#00e676]/5'
+                : 'bg-white border-slate-300 text-slate-800 hover:border-slate-900 hover:text-slate-900'
+            }`}
             aria-label="Get In Touch"
           >
-            <span className="flex items-center gap-2.5">
-              <Mail size={20} className="flex-shrink-0" />
-              Get In Touch
-            </span>
-          </motion.a>
-        </motion.div>
+            <Mail size={18} className="shrink-0" />
+            <span>Get In Touch</span>
+          </Motion.a>
+        </Motion.div>
 
-        {/* Scroll indicator - Optimized animation */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 1.5 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:block"
-        >
-        </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 }
