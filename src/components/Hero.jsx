@@ -60,18 +60,12 @@ function Hero({ loaderExiting }) {
       {showGhost && heroVisible && (
         <GhostCursor
           color={ACCENT_GREEN}
-          trailLength={45}
+          trailLength={40}
           inertia={0.5}
-          brightness={0.4}
-          bloomStrength={0.03}
-          bloomRadius={0.6}
-          bloomThreshold={0.05}
-          grainIntensity={0.04}
-          edgeIntensity={0}
-          fadeDelayMs={800}
+          brightness={0.85}
+          fadeDelayMs={400}
           fadeDurationMs={1200}
           mixBlendMode="screen"
-          maxDevicePixelRatio={1.5}
           zIndex={0}
         />
       )}
