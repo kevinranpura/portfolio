@@ -1,6 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=JetBrains+Mono:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
 
+/* ─── Smooth Animated Cursor Global Rules ───────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  *,
+  *::before,
+  *::after {
+    cursor: none !important;
+  }
+
+  input,
+  textarea,
+  select,
+  [contenteditable="true"] {
+    cursor: text !important;
+  }
+}
+
 /* ─── Theme tokens ─────────────────────────────────────────────────────────
    Declare surface colors as custom properties so every rule that needs
    the background color references the same source of truth.             */
@@ -15,7 +31,7 @@ html.dark {
 /* ─── Root background (overscroll flash fix) ───────────────────────────────
    html must have a real, opaque background-color--- never transparent---
    so the browser has something to show during rubber-band overscroll on
-   iOS/Android. body is transparent so it doesn't interfere with teh
+   iOS/Android. body is transparent so it doesn't interfere with the
    particles canvas layering beneath the content tree.                   */
 html {
   background-color: var(--surface-bg);
