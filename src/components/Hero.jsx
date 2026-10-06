@@ -1,7 +1,7 @@
 import { motion as Motion } from 'motion/react';
 import { ThemeContext } from '../App';
 import { useContext, useRef, useEffect, useState } from 'react';
-import { FileText, Mail, ArrowUpRight, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, ArrowRight } from 'lucide-react';
 import TextPressure from './TextPressure';
 import GhostCursor from './GhostCursor';
 
@@ -56,17 +56,27 @@ function Hero({ loaderExiting }) {
       ref={heroRef}
       className="min-h-[100dvh] flex items-center justify-center px-6 sm:px-8 lg:px-12 relative overflow-hidden bg-transparent select-none"
     >
-      {/* Ghost cursor trail */}
+      {/* Ghost cursor trail / glow effect behind text */}
       {showGhost && heroVisible && (
         <GhostCursor
-          color={ACCENT_GREEN}
-          trailLength={40}
+          // Visuals
+          color={isDark ? ACCENT_GREEN : '#16a34a'}
+          brightness={0.3}
+          edgeIntensity={0}
+
+          // Trail and motion
+          trailLength={50}
           inertia={0.5}
-          brightness={0.85}
-          fadeDelayMs={400}
+
+          // Post-processing
+          grainIntensity={0.03}
+          bloomStrength={0.12}
+          bloomRadius={0.6}
+          bloomThreshold={0.05}
+
+          // Fade-out behavior
+          fadeDelayMs={800}
           fadeDurationMs={1200}
-          mixBlendMode="screen"
-          zIndex={0}
         />
       )}
 
@@ -80,15 +90,14 @@ function Hero({ loaderExiting }) {
           className="mb-4 sm:mb-6"
         >
           <span
-            className={`font-mono text-sm sm:text-base tracking-[0.25em] uppercase font-medium ${
-              isDark ? 'text-[#86efac]/80' : 'text-slate-500'
-            }`}
+            className={`font-mono text-sm sm:text-base tracking-[0.25em] uppercase font-medium ${isDark ? 'text-[#86efac]/80' : 'text-slate-500'
+              }`}
           >
             Hello! I'm
           </span>
         </Motion.div>
 
-        {/* Name: TextPressure with taller height */}
+        {/* Name: TextPressure */}
         <Motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -96,9 +105,9 @@ function Hero({ loaderExiting }) {
           className="w-full mb-6 sm:mb-8"
         >
           <div
-            className="w-full max-w-2xl sm:max-w-3xl mx-auto h-32 sm:h-44 md:h-52 relative flex items-center justify-center"
+            className="w-full max-w-2xl sm:max-w-3xl mx-auto h-32 sm:h-46 md:h-56 relative flex items-center justify-center"
             style={{
-              transform: 'scaleY(1.15)',
+              transform: 'scaleY(1.25)',
               transformOrigin: 'center center',
             }}
           >
@@ -111,8 +120,8 @@ function Hero({ loaderExiting }) {
               width={true}
               weight={true}
               italic={false}
-              textColor={isDark ? ACCENT_GREEN : '#16a34a'}
-              minFontSize={60}
+              textColor={isDark ? "#ffffff" : '#16a34a'}
+              minFontSize={64}
               minWght={150}
               maxWght={1000}
               minWdth={50}
@@ -121,25 +130,27 @@ function Hero({ loaderExiting }) {
           </div>
         </Motion.div>
 
-        {/* Role: Crisp, balanced subheadline */}
-        <Motion.p
+        {/* Role: Glassmorphism Capsule Subheadline */}
+        <Motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          className={`font-mono text-lg sm:text-2xl md:text-3xl font-light tracking-wide max-w-2xl ${
-            isDark ? 'text-slate-300' : 'text-slate-700'
-          }`}
+          className="inline-flex items-center justify-center"
         >
-          Full-Stack Developer{' '}
-          <span
-            className={`font-normal ${
-              isDark ? 'text-[#00e676]' : 'text-emerald-600'
+          <div
+            className={`px-4 sm:px-6 py-2 sm:py-2.5 rounded-full backdrop-blur-md border font-mono text-xs sm:text-sm md:text-base tracking-[0.18em] sm:tracking-[0.25em] uppercase font-medium transition-colors ${
+              isDark
+                ? 'bg-black/40 border-white/10 text-[#00e676] shadow-[0_0_25px_rgba(0,0,0,0.5)]'
+                : 'bg-white/70 border-black/10 text-emerald-700 shadow-sm'
             }`}
           >
-            &amp;
-          </span>{' '}
-          AI Engineer
-        </Motion.p>
+            <span>
+              Full-Stack Developer{' '}
+              <span className={isDark ? 'text-white' : 'text-slate-900'}>&amp;</span>{' '}
+              AI Engineer
+            </span>
+          </div>
+        </Motion.div>
       </div>
 
       {/* ── Bottom-Right Stacked Pill Buttons ── */}
@@ -167,17 +178,16 @@ function Hero({ loaderExiting }) {
           <span>View Resume</span>
         </Motion.button>
 
-        {/* Outlined Pill (More compact) */}
+        {/* Outlined Pill */}
         <Motion.a
           href="#contact"
           onClick={handleContactScroll}
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className={`group inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-mono text-[11px] sm:text-xs font-medium tracking-wider uppercase transition-all duration-300 border backdrop-blur-sm cursor-pointer ${
-            isDark
+          className={`group inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full font-mono text-[11px] sm:text-xs font-medium tracking-wider uppercase transition-all duration-300 border backdrop-blur-sm cursor-pointer ${isDark
               ? 'bg-black/30 border-white/20 text-zinc-200 hover:border-[#00e676] hover:text-[#00e676] hover:bg-[#00e676]/10'
               : 'bg-white/70 border-zinc-300 text-zinc-800 hover:border-[#16a34a] hover:text-[#16a34a]'
-          }`}
+            }`}
           aria-label="Get In Touch"
         >
           <span>Get In Touch</span>
