@@ -179,7 +179,7 @@ export const projectsData = [
             'Developed a modular FastAPI backend with a React frontend for document upload and conversational querying'
         ],
 
-        github: 'https://github.com/kevinranpura',
+        github: 'https://github.com/kevinranpura/document-assistant',
         live: 'https://github.com/kevinranpura',
         featured: true
     },

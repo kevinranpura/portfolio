@@ -26,22 +26,22 @@ const SKILLS = {
 
 const PROJECTS = [
     {
-        name: "Project One",
-        desc: "Short one-line description of what it does.",
-        stack: "React · Node.js · PostgreSQL",
-        link: "github.com/kevinranpura/project-one",
+        name: "ResumeWiz - AI Resume Builder",
+        desc: "AI resume builder with ATS-friendly content, professional templates, and real-time editing.",
+        stack: "React · Node.js · Express · MongoDB",
+        link: "https://github.com/kevinranpura/ai-resume-builder",
     },
     {
-        name: "Project Two",
-        desc: "Short one-line description of what it does.",
-        stack: "Next.js · LangChain · OpenAI API",
-        link: "github.com/kevinranpura/project-two",
+        name: "StockSage AI - Agentic Stock Recommendation System",
+        desc: "Multi-agent AI system using LangGraph and MCP to analyze stocks and generate investment recommendations.",
+        stack: "Python · FastAPI · LangGraph · MCP",
+        link: "https://github.com/kevinranpura/agentic-stock-research",
     },
     {
-        name: "Project Three",
-        desc: "Short one-line description of what it does.",
-        stack: "Python · FastAPI · Docker",
-        link: "github.com/kevinranpura/project-three",
+        name: "Document AI Assistant",
+        desc: "RAG-powered assistant for PDF search and context-aware answers with source citations.",
+        stack: "Python · FastAPI · React · LangChain · ChromaDB",
+        link: "https://github.com/kevinranpura/document-assistant",
     },
 ];
 
@@ -104,7 +104,7 @@ function runCommand(raw) {
         const lines = [{ text: "Featured projects:", v: "heading" }];
         PROJECTS.forEach((p, i) => {
             lines.push({ text: `  ${i + 1}. ${p.name}`, v: "accent" });
-            lines.push({ text: `     ${p.desc}`, v: "default" });
+            lines.push({ text: p.desc, v: "default", indent: true });
             lines.push({ text: `     ${p.stack}`, v: "muted" });
             lines.push({ text: `     ${p.link}`, v: "muted" });
         });
@@ -260,7 +260,10 @@ function MiniTerminal() {
                             <span className="break-all">{line.text}</span>
                         </div>
                     ) : (
-                        <div key={i} className={`whitespace-pre-wrap ${variantClass(line.v)}`}>
+                        <div
+                            key={i}
+                            className={`whitespace-pre-wrap ${line.indent ? "pl-[5ch]" : ""} ${variantClass(line.v)}`}
+                        >
                             {line.text}
                         </div>
                     )
