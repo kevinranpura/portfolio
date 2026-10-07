@@ -55,22 +55,12 @@ function App() {
 
   const particlesContainerRef = useRef(null);
 
-  const [theme, setTheme] = useState(
-    () => localStorage.getItem('theme') || 'dark'
-  );
+  const theme = 'dark';
 
   useEffect(() => {
-    document.documentElement.classList.toggle(
-      'dark',
-      theme === 'dark'
-    );
-
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
-  };
+    document.documentElement.classList.add('dark');
+    localStorage.setItem('theme', 'dark');
+  }, []);
 
   const handleLoaderExitStart = useCallback(() => {
     setLoaderExiting(true);
@@ -79,7 +69,7 @@ function App() {
   const particlesOptions = useMemo(() => {
     return {
       background: {
-        color: theme === 'dark' ? '#050806' : '#f8faf8',
+        color: '#050806',
       },
 
       fpsLimit: 100,
@@ -94,7 +84,7 @@ function App() {
         },
 
         color: {
-          value: theme === 'dark' ? '#e2fbe8' : '#0f172a',
+          value: '#e2fbe8',
         },
 
         shape: {
@@ -136,7 +126,7 @@ function App() {
         links: {
           enable: true,
           distance: 200,
-          color: theme === 'dark' ? '#00e676' : '#16a34a',
+          color: '#00e676',
           opacity: 0.2,
           width: 1,
         },
@@ -181,7 +171,7 @@ function App() {
 
       detectRetina: true,
     };
-  }, [theme]);
+  }, []);
 
   useEffect(() => {
     const initParticles = async () => {
@@ -258,7 +248,7 @@ function App() {
         {/* <AnalyticsTracker /> */}
 
         <ThemeContext.Provider
-          value={{ theme, toggleTheme }}
+          value={{ theme }}
         >
           <Navbar />
           {/* Hero receives loaderExiting so GhostCursor & TextPressure

@@ -21,11 +21,11 @@
    Declare surface colors as custom properties so every rule that needs
    the background color references the same source of truth.             */
 :root {
-  --surface-bg: #fafafa;   /* light mode default */
+  --surface-bg: #000000;   /* dark mode surface background */
 }
 
 html.dark {
-  --surface-bg: #000000;   /* dark mode override */
+  --surface-bg: #000000;
 }
 
 /* ─── Root background (overscroll flash fix) ───────────────────────────────
